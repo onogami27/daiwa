@@ -3,10 +3,10 @@
 import PySimpleGUI as sg
 
 # ボタンが押されたときに表示する画像のファイルパス
-img_file1 = "C:\ ar-marker-main\ ar-marker-main\ src\ AprilTag\ AprilTag000.png"
+img_file1 = r"C:\Users\60837\Desktop\daiwa\AprilTag001.png"
 
 # ボタンが押されていないときに表示する画像のファイルパス
-img_file2 = "C:\ ar-marker-main\ ar-marker-main\src\AprilTag\AprilTag600.png"
+img_file2 = r"C:\Users\60837\Desktop\daiwa\製品検知画像.png"
 
 # Imageウィジェットを作成
 img = sg.Image(filename=img_file1,key="IMG")
