@@ -69,6 +69,24 @@ while True:
             except:
                 pass
             
+    def judgment():
+        if page_count == 0:
+            window["file_out"].update(data[0:500])
+            window["page_count"].update(page_count)
+        elif page_count == 1:
+            window["file_out"].update(data[500:1000])
+            window["page_count"].update(page_count)
+        elif page_count == 2:
+            window["file_out"].update(data[1000:1500])
+            window["page_count"].update(page_count)
+        elif page_count == 3:
+            window["file_out"].update(data[1500:2000])
+            window["page_count"].update(page_count)
+        elif page_count == 4:
+            window["file_out"].update(data[2000:2500])
+            window["page_count"].update(page_count)
+            
+            
     #前へボタンを押した時の処理
     if event == "back":
         if page_count == 0:
@@ -77,9 +95,9 @@ while True:
             page_count -= 1
             
             try:
-                
-                window["file_out"].update(data[0:100])
-                window["page_count"].update(page_count)
+                judgment()
+                #window["file_out"].update(data[0:100])
+                #window["page_count"].update(page_count)
             except:
                 
                 pass
@@ -89,9 +107,9 @@ while True:
         page_count +=1
         
         try:
-            
-            window["file_out"].update(data[101:200])
-            window["page_count"].update(page_count)
+            judgment()
+            #window["file_out"].update(data[101:200])
+            #window["page_count"].update(page_count)
         except:
             pass
     
