@@ -1,3 +1,4 @@
-file_data = open("hu.txt",encoding="utf_8")
-
-print(file_data.read())
+ds = "fdsgd"
+cc = 5
+exec("ds_{} = {}".format(cc,["igdjaso"]))
+print(ds_5[0])
