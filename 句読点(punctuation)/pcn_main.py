@@ -31,7 +31,10 @@ lay_1 = [
         [sg.InputText(key = "file_in",size=(20,1)),sg.FileBrowse("選択")],
         [sg.Button("読み込み処理",key = "file_read")],
 
-    ])]
+    ])],
+    [sg.Frame("処理開始",visible=False,key="frame_start",pad=(30,50),element_justification="center",layout=[
+         [sg.Button("開始",key="START",font=("meiryo",30))],
+     ])]
 ]
 
 lay_2 = [
@@ -40,7 +43,8 @@ lay_2 = [
         [sg.Multiline(key="file_out",size=(50,10))],
         [sg.Text("文字総数："),sg.InputText(key="let",size=(10,1)),sg.Button(image_source="back.png",key="back",mouseover_colors="white",button_color="black"),sg.Button(image_source="next.png",key="next",mouseover_colors="white",button_color="black"),
          sg.Text("ページNo."),sg.InputText(default_text=page_count,size=(3,1),key="page_count",enable_events=True)],
-    ])]
+    ]),],
+    
 ]
     
 lay_3 = [
@@ -51,12 +55,12 @@ lay_3 = [
 ]
 
 lay_4 = [
-    [sg.Button("開始",key="START")],
+    []
 ]
     
 
 
-layout = [[sg.Column(lay_1,vertical_alignment="t"),sg.Column(lay_2)],[sg.Column(lay_3),sg.Column(lay_4,vertical_alignment="c")]]
+layout = [[sg.Column(lay_1,vertical_alignment="t"),sg.Column(lay_2)],[sg.Column(lay_3)]]
 
 #ウィンドウの設定
 window = sg.Window("句読点処理",layout = layout)
@@ -125,6 +129,10 @@ while True:
             continue
         else:
             try:
+                
+                #処理開始ボタンを非表示にする
+                window["frame_start"].update(visible=False)
+                
                 file_data = open(r"{}".format(value["file_in"]),encoding="utf_8")
                 data = file_data.read()
                 
@@ -158,6 +166,9 @@ while True:
                 window["page_value"].update("0～500文字を表示")
                 window["let"].update(len(data))
                 file_data.close()
+                
+                #処理開始ボタンを表示する
+                window["frame_start"].update(visible=True)
                 
                 
             except:
@@ -339,6 +350,9 @@ while True:
     
     #句得点処理
     if event == "START":
+        
+        save_text()
+        
         OUT_TEXT = main(Setings["data_0"])
         window["result_out"].update(OUT_TEXT)
         
