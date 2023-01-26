@@ -55,12 +55,14 @@ lay_3 = [
 ]
 
 lay_4 = [
-    []
+    [sg.Text("スコア許容度"),sg.InputText(default_text="0.7",key="threshold",size=(4,1))],
+    [sg.Text("0～0.99までの数値を記入\n数値が上がるにつれ句読点挿入の\n判定が厳しくなります",text_color="#00ff00")],
+    [sg.Button("agv",key="agv")],
 ]
     
 
 
-layout = [[sg.Column(lay_1,vertical_alignment="t"),sg.Column(lay_2)],[sg.Column(lay_3)]]
+layout = [[sg.Column(lay_1,vertical_alignment="t"),sg.Column(lay_2)],[sg.Column(lay_3),sg.Column(lay_4)]]
 
 #ウィンドウの設定
 window = sg.Window("句読点処理",layout = layout)
@@ -68,7 +70,7 @@ window = sg.Window("句読点処理",layout = layout)
 
 
 #句読点メイン処理関数
-def main(value):
+def main(value,threshold):
     def insert_char_to_sentence(i, char, sentence): # sentenceのi文字目にcharを挿入する
         l = list(sentence)
         l.insert(i, char)
@@ -76,7 +78,7 @@ def main(value):
         return text
 
     original_sentence = f"{value}" # 省略
-    thresh = 0.7 # このスコア以上の場合、句読点を挿入する
+    thresh = threshold # このスコア以上の場合、句読点を挿入する
     i = 0
     punctuations = ["、", "。", "?"]
     chars_after_mask = 100
@@ -353,7 +355,18 @@ while True:
         
         save_text()
         
-        OUT_TEXT = main(Setings["data_0"])
-        window["result_out"].update(OUT_TEXT)
+        if value["threshold"] == "":
+            sg.popup("スコア許容度を入力して下さい")
+            continue
+        else:
+            #句読点処理
+            OUT_TEXT = main(value=Setings["data_0"],threshold=float(value["threshold"]))
+            window["result_out"].update(OUT_TEXT)
+        
+        
+        
+        
+    #TEST
+    if event == "agv":
         
         
