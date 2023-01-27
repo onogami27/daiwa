@@ -369,4 +369,19 @@ while True:
     #TEST
     if event == "agv":
         
+        save_text()
         
+        S = Setings.get_dict()
+        out_values = ""
+        for i in S.values():
+            out_values += i + "\n"
+            
+        window["result_out"].update(out_values)
+        
+    
+
+
+
+
+
+Setings.delete_file() #ユーザーセッティングファイルを消去
