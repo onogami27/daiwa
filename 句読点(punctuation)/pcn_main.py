@@ -55,9 +55,13 @@ lay_3 = [
 ]
 
 lay_4 = [
-    [sg.Text("スコア許容度"),sg.InputText(default_text="0.7",key="threshold",size=(4,1))],
+    [sg.Text("スコア許容度"),sg.InputText(default_text="0.5",key="threshold",size=(4,1))],
     [sg.Text("0～0.99までの数値を記入\n数値が上がるにつれ句読点挿入の\n判定が厳しくなります",text_color="#00ff00")],
-    [sg.Button("agv",key="agv")],
+    [sg.Frame("結果をテキストファイルに保存",key="OUT",visible=False,layout=[
+        [sg.Text("出力ファイル名"),sg.InputText(default_text="result",key="out_file_name",size=(20,1)),sg.Text(".txt")],
+        [sg.Button("保存する",key="save",button_color=("white","#0000ff"))]
+    ])],
+    
 ]
     
 
@@ -122,6 +126,14 @@ while True:
         window["warning"].update(visible=False)
     
     
+    #総文字数カウント
+    TT = Setings.get_dict()
+    TT_count = 0
+    for i in TT.values():
+        col = len(i)
+        TT_count += col
+    window["let"].update(TT_count)
+    
     #読み込み処理ボタンを押した時の処理
     if event == "file_read":
         page_count = 0 #ページカウントリセット　誤動作防止の為
@@ -132,8 +144,9 @@ while True:
         else:
             try:
                 
-                #処理開始ボタンを非表示にする
-                window["frame_start"].update(visible=False)
+                
+                #出力結果保存を非表示にする
+                window["OUT"].update(visible=False)
                 
                 file_data = open(r"{}".format(value["file_in"]),encoding="utf_8")
                 data = file_data.read()
@@ -459,23 +472,34 @@ while True:
             continue
         else:
             #句読点処理
-            OUT_TEXT = main(value=Setings["data_0"],threshold=float(value["threshold"]))
-            window["result_out"].update(OUT_TEXT)
-        
-        
-        
-        
-    #TEST
-    if event == "agv":
-        
-        save_text()
-        
-        S = Setings.get_dict()
-        out_values = ""
-        for i in S.values():
-            out_values += i + "\n"
+            save_text()
             
-        window["result_out"].update(out_values)
+            S = Setings.get_dict()
+            out_values = ""
+            for tes in S.values():
+                OUT_TEXT = main(value=tes ,threshold=float(value["threshold"]))
+                out_values += OUT_TEXT + "\n"
+                
+            window["result_out"].update(out_values)
+            window["OUT"].update(visible=True)
+        
+        
+        
+        
+    #出力結果を保存する
+    if event == "save":
+        if value["result_out"] == "":
+            sg.popup("出力結果がありません")
+            continue
+        else:
+            
+            file = open(f"{value['out_file_name']}.txt","w",encoding="UTF-8")
+            file.write(value["result_out"])
+            file.close()
+            sg.popup("ファイルの保存が完了しました")
+        
+        
+        
         
     
 
