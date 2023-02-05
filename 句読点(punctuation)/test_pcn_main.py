@@ -1,11 +1,16 @@
 import PySimpleGUI as sg
 from transformers import pipeline
 import os
+import torch
 
-#モデルの読み込み
-nlp = pipeline("fill-mask", model="cl-tohoku/bert-base-japanese-char",device=-1)
-#pipelineの引数　device= 0を指定すると→CUDA　，　-1を指定すると→CPU　を選択できる
-
+#cudaの認識確認
+dev = torch.cuda.is_available()
+if dev == False:
+    #モデルの読み込み
+    nlp = pipeline("fill-mask", model="cl-tohoku/bert-base-japanese-char",device="cpu:0")
+    #pipelineの引数　device= 0を指定すると→CUDA　，　-1を指定すると→CPU　を選択できる
+elif dev == True:
+    nlp = pipeline("fill-mask", model="cl-tohoku/bert-base-japanese-char",device="cuda:0")
 
 #GUIテーマの設定
 sg.theme("Black")
