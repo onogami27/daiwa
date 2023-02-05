@@ -176,6 +176,27 @@ while True:
                 Setings["data_18"] = data[9000:9500]
                 Setings["data_19"] = data[9500:10000]
                 Setings["data_20"] = data[10000:10500]
+                Setings["data_21"] = data[10500:11000]
+                Setings["data_22"] = data[11000:11500]
+                Setings["data_23"] = data[11500:12000]
+                Setings["data_24"] = data[12000:12500]
+                Setings["data_25"] = data[12500:13000]
+                Setings["data_26"] = data[13000:13500]
+                Setings["data_27"] = data[13500:14000]
+                Setings["data_28"] = data[14000:14500]
+                Setings["data_29"] = data[14500:15000]
+                Setings["data_30"] = data[15000:15500]
+                Setings["data_31"] = data[15500:16000]
+                Setings["data_32"] = data[16000:16500]
+                Setings["data_33"] = data[16500:17000]
+                Setings["data_34"] = data[17000:17500]
+                Setings["data_35"] = data[17500:18000]
+                Setings["data_36"] = data[18000:18500]
+                Setings["data_37"] = data[18500:19000]
+                Setings["data_38"] = data[19000:19500]
+                Setings["data_39"] = data[19500:20000]
+                
+                
                 
                 window["file_out"].update(Setings["data_0"])
                 window["page_count"].update(page_count)
@@ -275,7 +296,85 @@ while True:
             window["file_out"].update(Setings["data_20"])
             window["page_count"].update(page_count)
             window["page_value"].update("10000～10500文字を表示")
-    
+        elif page_count == 21:
+            window["file_out"].update(Setings["data_21"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("10500～11000文字を表示")
+        elif page_count == 22:
+            window["file_out"].update(Setings["data_22"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("11000～11500文字を表示")
+        elif page_count == 23:
+            window["file_out"].update(Setings["data_23"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("11500～12000文字を表示")
+        elif page_count == 24:
+            window["file_out"].update(Setings["data_24"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("12000～12500文字を表示")
+        elif page_count == 25:
+            window["file_out"].update(Setings["data_25"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("12500～13000文字を表示")
+        elif page_count == 26:
+            window["file_out"].update(Setings["data_26"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("13000～13500文字を表示")
+        elif page_count == 27:
+            window["file_out"].update(Setings["data_27"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("13500～14000文字を表示")
+        elif page_count == 28:
+            window["file_out"].update(Setings["data_28"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("14000～14500文字を表示")
+        elif page_count == 29:
+            window["file_out"].update(Setings["data_29"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("14500～15000文字を表示")
+        elif page_count == 30:
+            window["file_out"].update(Setings["data_30"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("15000～15500文字を表示")
+        elif page_count == 31:
+            window["file_out"].update(Setings["data_31"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("15500～16000文字を表示")
+        elif page_count == 32:
+            window["file_out"].update(Setings["data_32"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("16000～16500文字を表示")
+        elif page_count == 33:
+            window["file_out"].update(Setings["data_33"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("16500～17000文字を表示")
+        elif page_count == 34:
+            window["file_out"].update(Setings["data_34"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("17000～17500文字を表示")
+        elif page_count == 35:
+            window["file_out"].update(Setings["data_35"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("17500～18000文字を表示")
+        elif page_count == 36:
+            window["file_out"].update(Setings["data_36"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("18000～18500文字を表示")
+        elif page_count == 37:
+            window["file_out"].update(Setings["data_37"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("18500～19000文字を表示")
+        elif page_count == 38:
+            window["file_out"].update(Setings["data_38"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("19000～19500文字を表示")
+        elif page_count == 39:
+            window["file_out"].update(Setings["data_39"])
+            window["page_count"].update(page_count)
+            window["page_value"].update("19500～20000文字を表示")
+            
+            
+            
     #ユーザーセッティングへテキスト内容を保存する        
     def save_text():
         if page_count == 0:
