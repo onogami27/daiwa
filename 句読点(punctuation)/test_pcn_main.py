@@ -3,14 +3,20 @@ from transformers import pipeline
 import os
 import torch
 
+#モデル実行時の警告を消す
+from transformers import logging
+logging.set_verbosity_warning()
+logging.set_verbosity_error()
+
 #cudaの認識確認
 dev = torch.cuda.is_available()
 if dev == False:
     #モデルの読み込み
-    nlp = pipeline("fill-mask", model="cl-tohoku/bert-base-japanese-char",device="cpu:0")
+    nlp = pipeline("fill-mask", model="cl-tohoku/bert-base-japanese-char-whole-word-masking",device="cpu:0")
     #pipelineの引数　device= 0を指定すると→CUDA　，　-1を指定すると→CPU　を選択できる
 elif dev == True:
-    nlp = pipeline("fill-mask", model="cl-tohoku/bert-base-japanese-char",device="cuda:0")
+    nlp = pipeline("fill-mask", model="cl-tohoku/bert-base-japanese-char-whole-word-masking",device="cuda:0")
+
 
 #GUIテーマの設定
 sg.theme("Black")
@@ -81,6 +87,9 @@ window = sg.Window("句読点処理",layout = layout)
 
 #句読点メイン処理関数
 def main(value,threshold):
+    
+    
+    
     def insert_char_to_sentence(i, char, sentence): # sentenceのi文字目にcharを挿入する
         l = list(sentence)
         l.insert(i, char)
@@ -157,30 +166,32 @@ while True:
                 file_data = open(r"{}".format(value["file_in"]),encoding="utf_8")
                 data = file_data.read()
                 
-                global data_0,data_1,data_2,data_3,data_4,data_5,data_6,data_7,data_8,data_9,data_10,\
-                    data_11,data_12,data_13,data_14,data_15,data_16,data_17,data_18,data_19,data_20
+                for d_count in range(2001):
+                    L = d_count * 500
+                    R = L + 500
+                    Setings[f"data_{d_count}"] = data[L:R]
                 
-                Setings["data_0"] = data[0:500]
-                Setings["data_1"] = data[500:1000]
-                Setings["data_2"] = data[1000:1500]
-                Setings["data_3"] = data[1500:2000]
-                Setings["data_4"] = data[2000:2500]
-                Setings["data_5"] = data[2500:3000]
-                Setings["data_6"] = data[3000:3500]
-                Setings["data_7"] = data[3500:4000]
-                Setings["data_8"] = data[4000:4500]
-                Setings["data_9"] = data[4500:5000]
-                Setings["data_10"] = data[5000:5500]
-                Setings["data_11"] = data[5500:6000]
-                Setings["data_12"] = data[6000:6500]
-                Setings["data_13"] = data[6500:7000]
-                Setings["data_14"] = data[7000:7500]
-                Setings["data_15"] = data[7500:8000]
-                Setings["data_16"] = data[8000:8500]
-                Setings["data_17"] = data[8500:9000]
-                Setings["data_18"] = data[9000:9500]
-                Setings["data_19"] = data[9500:10000]
-                Setings["data_20"] = data[10000:10500]
+                #Setings["data_0"] = data[0:500]
+                #Setings["data_1"] = data[500:1000]
+                #Setings["data_2"] = data[1000:1500]
+                #Setings["data_3"] = data[1500:2000]
+                #Setings["data_4"] = data[2000:2500]
+                #Setings["data_5"] = data[2500:3000]
+                #Setings["data_6"] = data[3000:3500]
+                #Setings["data_7"] = data[3500:4000]
+                #Setings["data_8"] = data[4000:4500]
+                #Setings["data_9"] = data[4500:5000]
+                #Setings["data_10"] = data[5000:5500]
+                #Setings["data_11"] = data[5500:6000]
+                #Setings["data_12"] = data[6000:6500]
+                #Setings["data_13"] = data[6500:7000]
+                #Setings["data_14"] = data[7000:7500]
+                #Setings["data_15"] = data[7500:8000]
+                #Setings["data_16"] = data[8000:8500]
+                #Setings["data_17"] = data[8500:9000]
+                #Setings["data_18"] = data[9000:9500]
+                #Setings["data_19"] = data[9500:10000]
+                #Setings["data_20"] = data[10000:10500]
                 
                 window["file_out"].update(Setings["data_0"])
                 window["page_count"].update(page_count)
