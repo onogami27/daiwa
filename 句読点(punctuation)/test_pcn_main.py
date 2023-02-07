@@ -293,28 +293,29 @@ while True:
             window["page_value"].update("10000～10500文字を表示")
     
     #ユーザーセッティングへテキスト内容を保存する        
-    def save_text():
-        if page_count == 0:
-            Setings["data_0"] = value["file_out"]
-        if page_count == 1:
-            Setings["data_1"] = value["file_out"] 
-        if page_count == 2:
-            Setings["data_2"] = value["file_out"]    
-        if page_count == 3:
-            Setings["data_3"] = value["file_out"]  
-        if page_count == 4:
-            Setings["data_4"] = value["file_out"]
-        if page_count == 5:
-            Setings["data_5"] = value["file_out"]
-        if page_count == 6:
-            Setings["data_6"] = value["file_out"]
-        if page_count == 7:
-            Setings["data_7"] = value["file_out"]
-        if page_count == 8:
-            Setings["data_8"] = value["file_out"]
-        if page_count == 9:
-            Setings["data_9"] = value["file_out"]
-        if page_count == 10:
+    def save_text(page_count):
+        Setings[f"data_{page_count}"] = value["file_out"]
+        #if page_count == 0:
+        #    Setings["data_0"] = value["file_out"]
+        #if page_count == 1:
+        #    Setings["data_1"] = value["file_out"] 
+        #if page_count == 2:
+        #    Setings["data_2"] = value["file_out"]    
+        #if page_count == 3:
+        #    Setings["data_3"] = value["file_out"]  
+        #if page_count == 4:
+        #    Setings["data_4"] = value["file_out"]
+        #if page_count == 5:
+        #    Setings["data_5"] = value["file_out"]
+        #if page_count == 6:
+        #    Setings["data_6"] = value["file_out"]
+        #if page_count == 7:
+        #    Setings["data_7"] = value["file_out"]
+        #if page_count == 8:
+        #    Setings["data_8"] = value["file_out"]
+        #if page_count == 9:
+        #    Setings["data_9"] = value["file_out"]
+        #if page_count == 10:
             Setings["data_10"] = value["file_out"]
         if page_count == 11:
             Setings["data_11"] = value["file_out"]
