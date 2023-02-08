@@ -54,7 +54,7 @@ lay_2 = [
         [sg.Text("",key="page_value"),sg.InputText(key="now_count",size=(5,1),background_color="#696969"),sg.Text("※500文字以下にして下さい",text_color="red",key="warning",visible=False)],
         [sg.Multiline(key="file_out",size=(50,10))],
         [sg.Text("文字総数："),sg.InputText(key="let",size=(10,1)),sg.Button(image_source="back.png",key="back",mouseover_colors="white",button_color="black"),sg.Button(image_source="next.png",key="next",mouseover_colors="white",button_color="black"),
-         sg.Text("ページNo."),sg.InputText(default_text=page_count,size=(3,1),key="page_count",enable_events=True)],
+         sg.Text("ページNo."),sg.InputText(default_text=page_count,size=(5,1),key="page_count",enable_events=True)],
     ]),],
     
 ]
@@ -166,33 +166,13 @@ while True:
                 file_data = open(r"{}".format(value["file_in"]),encoding="utf_8")
                 data = file_data.read()
                 
+                #読み込んだファイルの内容をユーザーセッティングに保存する(500文字刻み)
                 for d_count in range(2001):
                     L = d_count * 500
                     R = L + 500
                     Setings[f"data_{d_count}"] = data[L:R]
                 
-                #Setings["data_0"] = data[0:500]
-                #Setings["data_1"] = data[500:1000]
-                #Setings["data_2"] = data[1000:1500]
-                #Setings["data_3"] = data[1500:2000]
-                #Setings["data_4"] = data[2000:2500]
-                #Setings["data_5"] = data[2500:3000]
-                #Setings["data_6"] = data[3000:3500]
-                #Setings["data_7"] = data[3500:4000]
-                #Setings["data_8"] = data[4000:4500]
-                #Setings["data_9"] = data[4500:5000]
-                #Setings["data_10"] = data[5000:5500]
-                #Setings["data_11"] = data[5500:6000]
-                #Setings["data_12"] = data[6000:6500]
-                #Setings["data_13"] = data[6500:7000]
-                #Setings["data_14"] = data[7000:7500]
-                #Setings["data_15"] = data[7500:8000]
-                #Setings["data_16"] = data[8000:8500]
-                #Setings["data_17"] = data[8500:9000]
-                #Setings["data_18"] = data[9000:9500]
-                #Setings["data_19"] = data[9500:10000]
-                #Setings["data_20"] = data[10000:10500]
-                
+              
                 window["file_out"].update(Setings["data_0"])
                 window["page_count"].update(page_count)
                 window["page_value"].update("0～500文字を表示")
@@ -206,145 +186,27 @@ while True:
             except:
                 pass
     
-    def judgment():
-        if page_count == 0: 
-            window["file_out"].update(Setings["data_0"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("0～500文字を表示")
-        elif page_count == 1:  
-            window["file_out"].update(Setings["data_1"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("500～1000文字を表示")
-        elif page_count == 2:
-            window["file_out"].update(Setings["data_2"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("1000～1500文字を表示")
-        elif page_count == 3:
-            window["file_out"].update(Setings["data_3"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("1500～2000文字を表示")
-        elif page_count == 4:
-            window["file_out"].update(Setings["data_4"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("2000～2500文字を表示")
-        elif page_count == 5:
-            window["file_out"].update(Setings["data_5"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("2500～3000文字を表示")
-        elif page_count == 6:
-            window["file_out"].update(Setings["data_6"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("3000～3500文字を表示")
-        elif page_count == 7:
-            window["file_out"].update(Setings["data_7"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("3500～4000文字を表示")
-        elif page_count == 8:
-            window["file_out"].update(Setings["data_8"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("4000～4500文字を表示")
-        elif page_count == 9:
-            window["file_out"].update(Setings["data_9"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("4500～5000文字を表示")
-        elif page_count == 10:
-            window["file_out"].update(Setings["data_10"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("5000～5500文字を表示")
-        elif page_count == 11:
-            window["file_out"].update(Setings["data_11"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("5500～6000文字を表示")
-        elif page_count == 12:
-            window["file_out"].update(Setings["data_12"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("6000～6500文字を表示")
-        elif page_count == 13:
-            window["file_out"].update(Setings["data_13"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("6500～7000文字を表示")
-        elif page_count == 14:
-            window["file_out"].update(Setings["data_14"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("7000～7500文字を表示")
-        elif page_count == 15:
-            window["file_out"].update(Setings["data_15"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("7500～8000文字を表示")
-        elif page_count == 16:
-            window["file_out"].update(Setings["data_16"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("8000～8500文字を表示")
-        elif page_count == 17:
-            window["file_out"].update(Setings["data_17"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("8500～9000文字を表示")
-        elif page_count == 18:
-            window["file_out"].update(Setings["data_18"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("9000～9500文字を表示")
-        elif page_count == 19:
-            window["file_out"].update(Setings["data_19"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("9500～10000文字を表示")
-        elif page_count == 20:
-            window["file_out"].update(Setings["data_20"])
-            window["page_count"].update(page_count)
-            window["page_value"].update("10000～10500文字を表示")
+    #page_countに応じて画面を更新する
+    def judgment(page_count):
+        
+        LL = page_count * 500
+        RR = LL + 500
+        
+        window["file_out"].update(Setings[f"data_{page_count}"])
+        window["page_count"].update(page_count)
+        window["page_value"].update(f"{LL}～{RR}文字を表示")
+        
+     
     
     #ユーザーセッティングへテキスト内容を保存する        
     def save_text(page_count):
         Setings[f"data_{page_count}"] = value["file_out"]
-        #if page_count == 0:
-        #    Setings["data_0"] = value["file_out"]
-        #if page_count == 1:
-        #    Setings["data_1"] = value["file_out"] 
-        #if page_count == 2:
-        #    Setings["data_2"] = value["file_out"]    
-        #if page_count == 3:
-        #    Setings["data_3"] = value["file_out"]  
-        #if page_count == 4:
-        #    Setings["data_4"] = value["file_out"]
-        #if page_count == 5:
-        #    Setings["data_5"] = value["file_out"]
-        #if page_count == 6:
-        #    Setings["data_6"] = value["file_out"]
-        #if page_count == 7:
-        #    Setings["data_7"] = value["file_out"]
-        #if page_count == 8:
-        #    Setings["data_8"] = value["file_out"]
-        #if page_count == 9:
-        #    Setings["data_9"] = value["file_out"]
-        #if page_count == 10:
-            Setings["data_10"] = value["file_out"]
-        if page_count == 11:
-            Setings["data_11"] = value["file_out"]
-        if page_count == 12:
-            Setings["data_12"] = value["file_out"]
-        if page_count == 13:
-            Setings["data_13"] = value["file_out"]
-        if page_count == 14:
-            Setings["data_14"] = value["file_out"]
-        if page_count == 15:
-            Setings["data_15"] = value["file_out"]
-        if page_count == 16:
-            Setings["data_16"] = value["file_out"]
-        if page_count == 17:
-            Setings["data_17"] = value["file_out"]
-        if page_count == 18:
-            Setings["data_18"] = value["file_out"]
-        if page_count == 19:
-            Setings["data_19"] = value["file_out"]
-        if page_count == 20:
-            Setings["data_20"] = value["file_out"]
-            
-            
+       
     
-            
     #前へボタンを押した時の処理
     if event == "back":
         
-        save_text()
+        save_text(page_count)
         
         if page_count == 0:
             pass
@@ -354,7 +216,7 @@ while True:
             
             try:
                 
-                judgment()
+                judgment(page_count)
                 
         
             except:
@@ -364,9 +226,9 @@ while True:
     #次へボタンを押した時の処理
     if event == "next":
         
-        save_text()
+        save_text(page_count)
         
-        if page_count == 20:
+        if page_count == 2000:
             pass
         else:
             page_count +=1
@@ -374,7 +236,7 @@ while True:
         
         try:
             
-            judgment()
+            judgment(page_count)
             
             
         except:
@@ -384,14 +246,15 @@ while True:
     #句得点処理
     if event == "START":
         
-        save_text()
+        save_text(page_count)
         
         if value["threshold"] == "":
             sg.popup("スコア許容度を入力して下さい")
             continue
         else:
             #句読点処理
-            save_text()
+            save_text(page_count)
+            
             
             S = Setings.get_dict()
             out_values = ""
