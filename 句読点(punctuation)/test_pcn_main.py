@@ -7,16 +7,22 @@ import torch
 from transformers import logging
 logging.set_verbosity_warning()
 logging.set_verbosity_error()
+#警告文を消す
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+
+#テキストを読み込む前に次へor前へボタンを押した時にエラーを出す為の信号
+flug = False
 
 #cudaの認識確認
-dev = torch.cuda.is_available()
-if dev == False:
-    #モデルの読み込み
-    nlp = pipeline("fill-mask", model="cl-tohoku/bert-base-japanese-char-whole-word-masking",device="cpu:0")
-    #pipelineの引数　device= 0を指定すると→CUDA　，　-1を指定すると→CPU　を選択できる
-elif dev == True:
-    nlp = pipeline("fill-mask", model="cl-tohoku/bert-base-japanese-char-whole-word-masking",device="cuda:0")
+#cudaの認識確認
 
+if torch.cuda.is_available():
+    device = torch.device("cuda:0")
+else:
+    device = torch.device("cpu")
+
+nlp = pipeline("fill-mask", model="cl-tohoku/bert-base-japanese-char-whole-word-masking",device=device,batch_size=300)
 
 #GUIテーマの設定
 sg.theme("Black")
@@ -182,6 +188,9 @@ while True:
                 #処理開始ボタンを表示する
                 window["frame_start"].update(visible=True)
                 
+                #次へor前へボタンを押せるようにする
+                flug = True
+                
                 
             except:
                 pass
@@ -205,43 +214,51 @@ while True:
     
     #前へボタンを押した時の処理
     if event == "back":
-        
-        save_text(page_count)
-        
-        if page_count == 0:
+        if flug == False:
+            sg.popup("ファイルを読み込んでください")
             pass
         else:
-            page_count -= 1
-            window["now_count"].update(page_count)
+            save_text(page_count)
+            
+            if page_count == 0:
+                pass
+            else:
+                page_count -= 1
+                window["now_count"].update(page_count)
+                
+                try:
+                    
+                    judgment(page_count)
+                    
+            
+                except:
+                    sg.popup("ファイルを読み込んで下さい")
+                    pass
+            
+    #次へボタンを押した時の処理
+    if event == "next":
+        
+        if flug == False:
+            sg.popup("ファイルを読み込んでください")
+            pass
+        else:
+        
+            save_text(page_count)
+            
+            if page_count == 2000:
+                pass
+            else:
+                page_count +=1
+                window["now_count"].update(page_count)
             
             try:
                 
                 judgment(page_count)
                 
-        
+                
             except:
                 sg.popup("ファイルを読み込んで下さい")
                 pass
-            
-    #次へボタンを押した時の処理
-    if event == "next":
-        
-        save_text(page_count)
-        
-        if page_count == 2000:
-            pass
-        else:
-            page_count +=1
-            window["now_count"].update(page_count)
-        
-        try:
-            
-            judgment(page_count)
-            
-            
-        except:
-            sg.popup("ファイルを読み込んで下さい")
-            pass
     
     #句得点処理
     if event == "START":
