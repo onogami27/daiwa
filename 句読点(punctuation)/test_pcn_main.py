@@ -22,7 +22,7 @@ if torch.cuda.is_available():
 else:
     device = torch.device("cpu")
 
-nlp = pipeline("fill-mask", model="cl-tohoku/bert-base-japanese-char-whole-word-masking",device=device,batch_size=300)
+nlp = pipeline("fill-mask", model="cl-tohoku/bert-base-japanese-char-whole-word-masking",device=device)
 
 #GUIテーマの設定
 sg.theme("Black")
@@ -114,7 +114,7 @@ def main(value,threshold):
         masked_text = insert_char_to_sentence(i, nlp.tokenizer.mask_token, corrected_sentence)
         
         pre_context, post_context = masked_text.split("。")[-1].split(nlp.tokenizer.mask_token)
-        res = nlp(f"{pre_context}{nlp.tokenizer.mask_token}{post_context[:chars_after_mask]}")[0] # scoreが一番高い文
+        res = nlp(f"{pre_context}{nlp.tokenizer.mask_token}{post_context[:chars_after_mask]}",batch_size=1)[0] # scoreが一番高い文
         if res["token_str"] not in punctuations: continue
         if res["score"] < thresh: continue
 
