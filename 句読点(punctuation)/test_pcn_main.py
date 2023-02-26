@@ -3,6 +3,11 @@ from transformers import pipeline
 import os
 import torch
 
+#cuDNNライブラリが最適なアルゴリズムを自動的に選択
+torch.backends.cudnn.enabled = True
+torch.backends.cudnn.benchmark = True
+
+
 #モデル実行時の警告を消す
 from transformers import logging
 logging.set_verbosity_warning()
@@ -21,8 +26,12 @@ if torch.cuda.is_available():
     device = torch.device("cuda:0")
 else:
     device = torch.device("cpu")
+  
+  
+  
 
-nlp = pipeline("fill-mask", model="cl-tohoku/bert-base-japanese-char-whole-word-masking",device=device)
+
+nlp = pipeline("fill-mask", model="cl-tohoku/bert-base-japanese-char-whole-word-masking",device=device,)
 
 #GUIテーマの設定
 sg.theme("Black")
