@@ -10,7 +10,7 @@ torch.backends.cudnn.benchmark = True
 
 #モデル実行時の警告を消す
 from transformers import logging
-logging.set_verbosity_warning()
+#logging.set_verbosity_warning()
 logging.set_verbosity_error()
 #警告文を消す
 import warnings

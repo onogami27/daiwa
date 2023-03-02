@@ -14,7 +14,7 @@ logging.set_verbosity_warning()
 logging.set_verbosity_error()
 #警告文を消す
 import warnings
-warnings.filterwarnings("ignore", category=UserWarning)
+#warnings.filterwarnings("ignore", category=UserWarning)
 
 #テキストを読み込む前に次へor前へボタンを押した時にエラーを出す為の信号
 flug = False

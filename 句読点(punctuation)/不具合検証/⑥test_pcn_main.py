@@ -4,7 +4,7 @@ import os
 import torch
 
 #cuDNNライブラリが最適なアルゴリズムを自動的に選択
-
+torch.backends.cudnn.enabled = True
 torch.backends.cudnn.benchmark = True
 
 
@@ -102,7 +102,7 @@ window = sg.Window("句読点処理",layout = layout)
 
 
 #句読点メイン処理関数
-def main(value,threshold,batch_size):
+def main(value,threshold):
     
     
     
@@ -124,7 +124,7 @@ def main(value,threshold,batch_size):
         masked_text = insert_char_to_sentence(i, nlp.tokenizer.mask_token, corrected_sentence)
         
         pre_context, post_context = masked_text.split("。")[-1].split(nlp.tokenizer.mask_token)
-        res = nlp(f"{pre_context}{nlp.tokenizer.mask_token}{post_context[:chars_after_mask]}",batch_size=batch_size)[0] # scoreが一番高い文
+        res = nlp(f"{pre_context}{nlp.tokenizer.mask_token}{post_context[:chars_after_mask]}")[0] # scoreが一番高い文
         if res["token_str"] not in punctuations: continue
         if res["score"] < thresh: continue
 
@@ -286,7 +286,7 @@ while True:
             S = Setings.get_dict()
             out_values = ""
             for tes in S.values():
-                OUT_TEXT = main(value=tes ,threshold=float(value["threshold"]),batch_size=int(value["batch_size"]))
+                OUT_TEXT = main(value=tes ,threshold=float(value["threshold"]))
                 out_values += OUT_TEXT + "\n"
                 
             window["result_out"].update(out_values)

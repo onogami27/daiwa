@@ -5,7 +5,7 @@ import torch
 
 #cuDNNライブラリが最適なアルゴリズムを自動的に選択
 torch.backends.cudnn.enabled = True
-torch.backends.cudnn.benchmark = True
+
 
 
 #モデル実行時の警告を消す
