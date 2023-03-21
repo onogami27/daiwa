@@ -71,14 +71,20 @@ lay_1 = sg.Tab("通常Whisper",[
 lay_2 = sg.Tab("Gladia_API",[
     [sg.Frame("",[
     [sg.Text("APIキー"),sg.InputText(key="API_key",size=(25,1))],
-    [],
     [sg.Text("オーディオファイル選択"),sg.InputText(key="",size=(30,1)),sg.FileBrowse("選択")],
-    [],
     [sg.Text("モデル選択"),sg.Combo(values=['large-v2','medium'],default_value='large-v2')],
-    [],
+    [sg.Text("話者分離機能"),sg.Radio("OFF",group_id="A",default=True),sg.Radio("ON",group_id="A")],
     
     
-    ])]
+    ])],
+    
+    [sg.Frame("",[
+        [sg.Output(size=(52,10),key="api_out")],
+        
+    ])],
+    
+    [sg.Button("START",key="api_start")],
+    
 ])
 
 
