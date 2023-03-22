@@ -4,7 +4,7 @@ import json
 headers = {
     'accept': 'application/json',
     #APIキー
-    'x-gladia-key': '2400b92a-a598-495c-b206-b6ba1d6051ac',
+    'x-gladia-key': 'd332972b-3312-4d9f-ac8a-1c57fd6df153',
 }
 
 params = {
@@ -14,7 +14,7 @@ params = {
 
 files = {
     #読み込みファイル
-    'audio': ("cris.m4a", open('cris.m4a', 'rb'), 'audio/mpeg'),
+    'audio': ("in silence.mp4", open('in silence.mp4', 'rb'), 'audio/mpeg'),
     #翻訳言語
     'language': (None, 'japanese'),
     #言語行動 [manual, automatic single language, automatic multiple languages]
@@ -32,6 +32,6 @@ response = requests.post('https://api.gladia.io/audio/text/audio-transcription/'
 
 
 out = json.loads(response.text)
-
-for i in out["prediction"]:
-    print(i["transcription"])
+print(out)
+#for i in out["prediction"]:
+#    print(i["transcription"])
