@@ -14,17 +14,19 @@ params = {
 
 files = {
     #読み込みファイル
-    'audio': ("in silence.mp4", open('in silence.mp4', 'rb'), 'audio/mpeg'),
+    'audio': ("ki_va.mp3", open('ki_va.mp3', 'rb'), 'audio/mpeg'),
     #翻訳言語
     'language': (None, 'japanese'),
     #言語行動 [manual, automatic single language, automatic multiple languages]
     'language_behaviour': (None, 'manual'),
     #ノイズ減少機能
-    'noise_reduction': (None, 'true'),
+    'noise_reduction': (None, 'false'),
     #出力フォーマット [json, srt, txt, plain]
     'output_format': (None, 'json'),
     #話者分離機能
-    'toggle_diarization': (None, 'true'),
+    'toggle_diarization': (None, 'false'),
+    #直訳機能
+    'toggle_direct_translate': (None, 'false')
 }
 
 response = requests.post('https://api.gladia.io/audio/text/audio-transcription/', params=params, headers=headers, files=files)
