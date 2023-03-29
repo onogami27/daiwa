@@ -8,21 +8,21 @@ import torch
 import requests
 import json
 
-def main_act():
+def main_act(API_key,model,audio_file):
     headers = {
     'accept': 'application/json',
     #APIキー
-    'x-gladia-key': 'd332972b-3312-4d9f-ac8a-1c57fd6df153',
+    'x-gladia-key': f'{API_key}',
 }
 
     params = {
         #モデル [large-v2 , medium]
-        'model': 'large-v2',
+        'model': f'{model}',
     }
 
     files = {
         #読み込みファイル
-        'audio': ("ki_va.mp3", open('ki_va.mp3', 'rb'), 'audio/mpeg'),
+        'audio': (f"{audio_file}", open(f'{audio_file}', 'rb'), 'audio/mpeg'),
         #翻訳言語
         'language': (None, 'japanese'),
         #言語行動 [manual, automatic single language, automatic multiple languages]
@@ -42,13 +42,13 @@ def main_act():
 
 
     out = json.loads(response.text)
-    out_list = []
-    ii = ""
+    out_str = ""
+    
     
     for i in out["prediction"]:
+        out_str += f"{i['transcription']}\n"
         
-        print(i["transcription"])
-    return 
+    return out_str
 
 #CUDA認識
 cuda = str(torch.cuda.is_available())

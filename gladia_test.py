@@ -14,7 +14,7 @@ params = {
 
 files = {
     #読み込みファイル
-    'audio': ("ki_va.mp3", open('ki_va.mp3', 'rb'), 'audio/mpeg'),
+    'audio': ("in silence.mp4", open('in silence.mp4', 'rb'), 'audio/mpeg'),
     #翻訳言語
     'language': (None, 'japanese'),
     #言語行動 [manual, automatic single language, automatic multiple languages]
@@ -32,8 +32,8 @@ files = {
 response = requests.post('https://api.gladia.io/audio/text/audio-transcription/', params=params, headers=headers, files=files)
 
 
-
-out = json.loads(response.text)
-print(out)
+print(response.text)
+#out = json.loads(response.text)
+#print(out)
 #for i in out["prediction"]:
 #    print(i["transcription"])

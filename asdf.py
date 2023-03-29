@@ -1,5 +1,8 @@
 uu =[ {"A":"hello"},{"A":"よろしく"},{"A":"END"}]
 
+OI = ""
 
 for i in uu:
-    print(i["A"])
+    OI += f"{i['A']}\n"
+    
+print(OI)
