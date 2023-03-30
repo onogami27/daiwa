@@ -15,10 +15,9 @@ def main_act(API_key,model,audio_file):
     'x-gladia-key': f'{API_key}',
 }
 
-    params = {
+    #params = {
         #モデル [large-v2 , medium]
-        'model': f'{model}',
-    }
+    #    'model': f'{model}',}
 
     files = {
         #読み込みファイル
@@ -28,27 +27,30 @@ def main_act(API_key,model,audio_file):
         #言語行動 [manual, automatic single language, automatic multiple languages]
         'language_behaviour': (None, 'manual'),
         #ノイズ減少機能
-        'noise_reduction': (None, 'false'),
+        'toggle_noise_reduction': (None, 'false'),
         #出力フォーマット [json, srt, txt, plain]
-        'output_format': (None, 'json'),
+        'output_format': (None, 'plain'),
         #話者分離機能
         'toggle_diarization': (None, 'false'),
         #直訳機能
         'toggle_direct_translate': (None, 'false')
     }
 
-    response = requests.post('https://api.gladia.io/audio/text/audio-transcription/', params=params, headers=headers, files=files)
+    response = requests.post('https://api.gladia.io/audio/text/audio-transcription/', headers=headers, files=files)
 
 
 
-    out = json.loads(response.text)
-    out_str = ""
+    #out = json.loads(response.text)
+    #out_str = ""
     
     
-    for i in out["prediction"]:
-        out_str += f"{i['transcription']}\n"
-        
-    return out_str
+    #for i in out["prediction"]:
+    #    out_str += f"{i['transcription']}\n"
+    
+    outv = response.text
+    
+    
+    return outv
 
 #CUDA認識
 cuda = str(torch.cuda.is_available())
@@ -151,7 +153,8 @@ while True:
     #翻訳処理関数
     def GO (file_path):
         
-        out = subprocess.run("whisper  {0}  --language {1} --task {2} --model {3} --output_dir {4} --device {5} ".format(file_path,value["language"],value["task"],value["model"],r"{}".format(value["output_dir"]),value["device"]),shell=True,  stdout=subprocess.PIPE)#check=True
+        out = subprocess.run("whisper  {0}  --language {1} --task {2} --model {3} --output_dir {4} --device {5} --model_dir {6} --output_format {7} ".format(file_path,value["language"],value["task"],value["model"],r"{}".format(value["output_dir"]),value["device"],
+                                                                                                                                         value["model_dir"],value["output_format"]),shell=True,  stdout=subprocess.PIPE)#check=True
         out_put = str(out.stdout,"shift_jis")
         
         return out_put
