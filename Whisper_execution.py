@@ -78,7 +78,8 @@ def Whisper_start(model,file_name,language_name,output_dir):
 
 sg.set_options(dpi_awareness=True,use_ttk_buttons=True,font=("デジタル",10))
 
-Model_list = ["tiny.en","tiny","base.en","base","small.en","small","medium.en","medium","large"]
+Model_list = ["tiny.en","tiny","base.en","base","small.en","small","medium.en","medium","large-v1","large-v2","large"]
+
 Language_list =["af","am","ar","as","az","ba","be","bg","bn","bo","br","bs","ca","cs","cy","da","de","el","en","es","et","eu","fa",
                 "fi","fo","fr","gl","gu","ha","haw","hi","hr","ht","hu","hy","id","is","it","iw","ja","jw","ka","kk","km","kn","ko",
                 "la","lb","ln","lo","lt","lv","mg","mi","mk","ml","mn","mr","ms","mt","my","ne","nl","nn","no","oc","pa","pl","ps","pt",
@@ -93,7 +94,10 @@ Language_list =["af","am","ar","as","az","ba","be","bg","bn","bo","br","bs","ca"
                 "Russian","Sanskrit","Serbian","Shona","Sindhi","Sinhala","Sinhalese","Slovak","Slovenian","Somali","Spanish","Sundanese",
                 "Swahili","Swedish","Tagalog","Tajik","Tamil","Tatar","Telugu","Thai","Tibetan","Turkish","Turkmen","Ukrainian","Urdu",
                 "Uzbek","Valencian","Vietnamese","Welsh","Yiddish","Yoruba"]
+
 device_list=["cpu", "cuda", "ipu", "xpu", "mkldnn", "opengl", "opencl", "ideep", "hip", "ve", "ort", "mps", "xla", "lazy", "vulkan", "meta", "hpu"]
+
+output_format_list = ["txt","vtt","srt","tsv","json","all"]
 
 lay_1 = sg.Tab("通常Whisper",[
     [sg.Text("CUDA認識"),sg.InputText(default_text= cuda , size=(6,1),)],
@@ -101,9 +105,11 @@ lay_1 = sg.Tab("通常Whisper",[
     [sg.Text("task選択"),sg.Combo(values=["transcribe","translate"],default_value="transcribe",key="task",readonly=True)],
     [sg.Text("翻訳するファイルを選択"),sg.InputText(key="in_file",size=(20,1)),sg.FileBrowse("ファイル選択")],
     [sg.Text("学習モデルを選択"),sg.Combo(values=Model_list,auto_size_text=True,key="model",readonly=True,default_value="base")],
+    [sg.Text("モデル保存場所を選択"),sg.InputText(default_text=f"{os.path.dirname(__file__)}",key="model_dir",size=(20,1)),sg.FolderBrowse("フォルダ選択")],
     [sg.Text("翻訳言語を選択"),sg.Combo(values=Language_list,size=(15,1),key="language",readonly=True,default_value="Japanese")],
     [sg.Text("デバイスを選択 --device"),sg.Combo(values=device_list,size=(15,1),key="device",readonly=True,default_value="cpu")],
-    [sg.Text("保存先のフォルダを選択"),sg.InputText(key="output_dir",size=(20,1)),sg.FolderBrowse("選択")],]),],
+    [sg.Text("出力形式を選択"),sg.Combo(values=output_format_list,auto_size_text=True,readonly=True,default_value="all",key="output_format")],
+    [sg.Text("保存先のフォルダを選択"),sg.InputText(key="output_dir",size=(20,1)),sg.FolderBrowse("フォルダ選択")],]),],
     [sg.Frame("",[
     [sg.Output(size=(52,10),key="out")],
     [sg.Button("保存先のフォルダを開く",key="open_dir",visible=False,button_color=("white","blue")),],
@@ -145,7 +151,7 @@ while True:
     #翻訳処理関数
     def GO (file_path):
         
-        out = subprocess.run("whisper  {0}  --language {1} --task {2} --model {3} --output_dir {4} --device {5}".format(file_path,value["language"],value["task"],value["model"],r"{}".format(value["output_dir"]),value["device"]),shell=True,  stdout=subprocess.PIPE)#check=True
+        out = subprocess.run("whisper  {0}  --language {1} --task {2} --model {3} --output_dir {4} --device {5} ".format(file_path,value["language"],value["task"],value["model"],r"{}".format(value["output_dir"]),value["device"]),shell=True,  stdout=subprocess.PIPE)#check=True
         out_put = str(out.stdout,"shift_jis")
         
         return out_put
