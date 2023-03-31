@@ -101,6 +101,21 @@ device_list=["cpu", "cuda", "ipu", "xpu", "mkldnn", "opengl", "opencl", "ideep",
 
 output_format_list = ["txt","vtt","srt","tsv","json","all"]
 
+
+API_Language_list = ["afrikaans","albanian","amharic","arabic","armenian","assamese","azerbaijani",
+                     "bashkir","basque","belarusian","bengali","bosnian","breton","bulgarian","catalan",
+                     "chinese","croatian","czech","danish","dutch","english","estonian","faroese",
+                     "finnish","french","galician","georgian","german","greek","gujarati","haitian creole",
+                     "hausa","hawaiian","hebrew","hindi","hungarian","icelandic","indonesian","italian",
+                     "japanese","javanese","kannada","kazakh","khmer","korean","lao","latin","latvian",
+                     "lingala","lithuanian","luxembourgish","macedonian","malagasy","malay","malayalam",
+                     "maltese","maori","marathi","mongolian","myanmar","nepali","norwegian","nynorsk",
+                     "occitan","pashto","persian","polish","portuguese","punjabi","romanian","russian",
+                     "sanskrit","serbian","shona","sindhi","sinhala","slovak","slovenian","somali",
+                     "spanish","sundanese","swahili","swedish","tagalog","tajik","tamil","tatar",
+                     "telugu","thai","tibetan","turkish","turkmen","ukrainian","urdu","uzbek",
+                     "vietnamese","welsh","wolof","yiddish","yoruba"]
+
 lay_1 = sg.Tab("通常Whisper",[
     [sg.Text("CUDA認識"),sg.InputText(default_text= cuda , size=(6,1),)],
     [sg.Frame("",[
@@ -124,7 +139,12 @@ lay_2 = sg.Tab("Gladia_API",[
     [sg.Frame("",[
     [sg.Text("APIキー"),sg.InputText(key="API_key",size=(25,1))],
     [sg.Text("オーディオファイル選択"),sg.InputText(key="API_in_file",size=(30,1)),sg.FileBrowse("選択")],
-    [sg.Text("モデル選択"),sg.Combo(values=['large-v2','medium'],default_value='large-v2',key="API_model")],
+    [sg.Text("ノイズ減少機能"),sg.Checkbox("",key="toggle_noise_reduction")],
+    [sg.Text("話者分離機能"),sg.Checkbox("",key="toggle_diarization")],
+    [sg.Text("翻訳言語"),sg.Combo(values=API_Language_list,size=(15,1),key="target_translation_language",readonly=True,default_value="japanese")],
+    
+    
+    
     [sg.Text("話者分離機能"),sg.Radio("OFF",group_id="A",default=True),sg.Radio("ON",group_id="A")],
     
     
@@ -195,6 +215,7 @@ while True:
 #-+-+-+-+-+-+-+-+-+-+-+-Gladia_API実行処理-+-+-+-+-+-+-+-+-+-+-+-+-
 
     if event == "api_start":
-        get_api = main_act(API_key=f"{value['API_key']}", model=value['API_model'], audio_file=value["API_in_file"])
+        get_api = main_act(API_key=f"{value['API_key']}", audio_file=value["API_in_file"])
         window["api_out"].update(get_api)
        
+   
