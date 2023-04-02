@@ -8,7 +8,7 @@ import torch
 import requests
 import json
 
-def main_act(API_key,model,audio_file):
+def main_act(API_key,audio_file):
     headers = {
     'accept': 'application/json',
     #APIキー
@@ -32,6 +32,8 @@ def main_act(API_key,model,audio_file):
         'output_format': (None, 'plain'),
         #話者分離機能
         'toggle_diarization': (None, 'false'),
+        #最大スピーカー数
+        'diarization_max_speakers': (None, '5'),
         #直訳機能
         'toggle_direct_translate': (None, 'false')
     }
@@ -142,10 +144,9 @@ lay_2 = sg.Tab("Gladia_API",[
     [sg.Text("ノイズ減少機能"),sg.Checkbox("",key="toggle_noise_reduction")],
     [sg.Text("話者分離機能"),sg.Checkbox("",key="toggle_diarization")],
     [sg.Text("翻訳言語"),sg.Combo(values=API_Language_list,size=(15,1),key="target_translation_language",readonly=True,default_value="japanese")],
-    
-    
-    
     [sg.Text("話者分離機能"),sg.Radio("OFF",group_id="A",default=True),sg.Radio("ON",group_id="A")],
+    [sg.Text("最大スピーカー数"),sg.InputText(key="diarization_max_speakers",size=(5,1),default_text="5")],
+    
     
     
     ])],
