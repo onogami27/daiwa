@@ -8,51 +8,84 @@ import torch
 import requests
 import json
 
-def main_act(API_key,audio_file):
+
+#話者分離機能OFF　API処理
+def main_act(API_key,audio_file,noise,language):
     headers = {
     'accept': 'application/json',
     #APIキー
     'x-gladia-key': f'{API_key}',
 }
 
-    #params = {
-        #モデル [large-v2 , medium]
-    #    'model': f'{model}',}
+    files = {
+        #読み込みファイル
+        'audio': (f"{audio_file}", open(f'{audio_file}', 'rb'), 'audio/mpeg'),
+        #翻訳言語
+        'language': (None, f'{language}'),
+        #翻訳言語
+        'target_translation_language': (None, f'{language}'),
+        #言語行動 [manual, automatic single language, automatic multiple languages]
+        'language_behaviour': (None, 'manual'),
+        #ノイズ減少機能
+        'toggle_noise_reduction': (None, f'{noise}'),
+        #出力フォーマット [json, srt, txt, plain]
+        'output_format': (None, 'plain'),
+        #話者分離機能
+        'toggle_diarization': (None, 'false'),
+
+
+    }
+
+    response = requests.post('https://api.gladia.io/audio/text/audio-transcription/', headers=headers, files=files)
+
+    
+    outv = response.text
+    out_V = outv.replace('"','')
+    return out_V
+
+#話者分離機能ON　API処理
+def diarization_main_act(API_key,audio_file,speakers,noise,language):
+    headers = {
+    'accept': 'application/json',
+    #APIキー
+    'x-gladia-key': f'{API_key}',
+}
 
     files = {
         #読み込みファイル
         'audio': (f"{audio_file}", open(f'{audio_file}', 'rb'), 'audio/mpeg'),
         #翻訳言語
-        'language': (None, 'japanese'),
+        'language': (None, f'{language}'),
+        #翻訳言語
+        'target_translation_language': (None, f'{language}'),
         #言語行動 [manual, automatic single language, automatic multiple languages]
         'language_behaviour': (None, 'manual'),
         #ノイズ減少機能
-        'toggle_noise_reduction': (None, 'false'),
+        'toggle_noise_reduction': (None, f'{noise}'),
         #出力フォーマット [json, srt, txt, plain]
         'output_format': (None, 'plain'),
         #話者分離機能
-        'toggle_diarization': (None, 'false'),
+        'toggle_diarization': (None, 'true'),
         #最大スピーカー数
-        'diarization_max_speakers': (None, '5'),
-        #直訳機能
-        'toggle_direct_translate': (None, 'false')
+        'diarization_max_speakers': (None, f'{speakers}'),
+        
+
     }
 
     response = requests.post('https://api.gladia.io/audio/text/audio-transcription/', headers=headers, files=files)
-
-
 
     #out = json.loads(response.text)
     #out_str = ""
     
     
     #for i in out["prediction"]:
-    #    out_str += f"{i['transcription']}\n"
+    #    out_str += f"{i['speaker']}:{i['transcription']}\n"
+    
     
     outv = response.text
+    out_V = outv.replace('"','')
     
-    
-    return outv
+    return out_V
 
 #CUDA認識
 cuda = str(torch.cuda.is_available())
@@ -130,7 +163,7 @@ lay_1 = sg.Tab("通常Whisper",[
     [sg.Text("出力形式を選択"),sg.Combo(values=output_format_list,auto_size_text=True,readonly=True,default_value="all",key="output_format")],
     [sg.Text("保存先のフォルダを選択"),sg.InputText(key="output_dir",size=(20,1)),sg.FolderBrowse("フォルダ選択")],]),],
     [sg.Frame("",[
-    [sg.Output(size=(52,10),key="out")],
+    [sg.Multiline(size=(52,10),key="out")],
     [sg.Button("保存先のフォルダを開く",key="open_dir",visible=False,button_color=("white","blue")),],
     ])],
     [sg.Button("START",key="START")],
@@ -141,23 +174,27 @@ lay_2 = sg.Tab("Gladia_API",[
     [sg.Frame("",[
     [sg.Text("APIキー"),sg.InputText(key="API_key",size=(25,1))],
     [sg.Text("オーディオファイル選択"),sg.InputText(key="API_in_file",size=(30,1)),sg.FileBrowse("選択")],
-    [sg.Text("ノイズ減少機能"),sg.Checkbox("",key="toggle_noise_reduction")],
-    [sg.Text("話者分離機能"),sg.Checkbox("",key="toggle_diarization")],
     [sg.Text("翻訳言語"),sg.Combo(values=API_Language_list,size=(15,1),key="target_translation_language",readonly=True,default_value="japanese")],
-    [sg.Text("話者分離機能"),sg.Radio("OFF",group_id="A",default=True),sg.Radio("ON",group_id="A")],
-    [sg.Text("最大スピーカー数"),sg.InputText(key="diarization_max_speakers",size=(5,1),default_text="5")],
+    [sg.Text("ノイズ減少機能"),sg.Checkbox("",key="toggle_noise_reduction",enable_events=True)],
+    [sg.Frame("",layout=[
+        
+        [sg.Text("話者分離機能"),sg.Radio("OFF",group_id="A",default=True,key="toggle_diarization_off",enable_events=True),sg.Radio("ON",group_id="A",key="toggle_diarization_on",enable_events=True)],
+        [sg.Text("最大スピーカー数",key="最大スピーカー数",visible=False),sg.InputText(key="diarization_max_speakers",size=(5,1),default_text="2",visible=False)],
+        
+    ])],
+    
     
     
     
     ])],
     
     [sg.Frame("",[
-        [sg.Output(size=(52,10),key="api_out")],
+        [sg.Multiline(size=(52,10),key="api_out")],
         
     ])],
     
     [sg.Button("START",key="api_start",enable_events=True)],
-    
+  
 ])
 
 
@@ -181,7 +218,7 @@ while True:
         return out_put
     
     
-    
+
    
     #翻訳処理実行
     if event == "START":
@@ -214,9 +251,51 @@ while True:
     
     
 #-+-+-+-+-+-+-+-+-+-+-+-Gladia_API実行処理-+-+-+-+-+-+-+-+-+-+-+-+-
+    
+    #ラジオボタン"話者分離機能"を切り替えた時の処理
+    if value["toggle_diarization_on"] == True:
+        window["最大スピーカー数"].update(visible=True)
+        window["diarization_max_speakers"].update(visible=True)
+    
+    elif value["toggle_diarization_off"] == True:
+        window["最大スピーカー数"].update(visible=False)
+        window["diarization_max_speakers"].update(visible=False)
 
+    #処理実行
     if event == "api_start":
-        get_api = main_act(API_key=f"{value['API_key']}", audio_file=value["API_in_file"])
-        window["api_out"].update(get_api)
-       
-   
+        
+        #(拡張子あり)ファイル名の取得
+        file_name = os.path.split(value["API_in_file"])[1]
+        #(拡張子無し)ファイル名の取得
+        extension_file_name = os.path.splitext(file_name)[0]
+        
+        
+        #ノイズ減少機能の有無を判定
+        if value["toggle_noise_reduction"] == True:
+           noise_value = "true"
+           
+        elif value["toggle_noise_reduction"] == False:
+           noise_value = "false"
+           
+            
+        #話者分離機能OFF　処理実行
+        if value["toggle_diarization_off"] == True:
+            get_api = main_act(API_key=f"{value['API_key']}", audio_file=value["API_in_file"],
+                               noise=noise_value,language=value["target_translation_language"])
+            window["api_out"].update(get_api)
+            
+            #テキスト出力
+            f = open(f"{extension_file_name}.txt","w")
+            f.write(get_api)
+            f.close()
+        #話者分離機能ON　処理実行
+        elif value["toggle_diarization_on"] == True:
+            get_api = diarization_main_act(API_key=f"{value['API_key']}", audio_file=value["API_in_file"], speakers=value["diarization_max_speakers"],
+                                           noise=noise_value,language=value["target_translation_language"])
+            window["api_out"].update(get_api)
+            
+            #テキスト出力
+            f = open(f"{extension_file_name}.txt","w")
+            f.write(get_api)
+            f.close()
+    
