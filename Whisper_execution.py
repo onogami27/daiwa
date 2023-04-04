@@ -193,7 +193,7 @@ lay_2 = sg.Tab("Gladia_API",[
         
     ])],
     
-    [sg.Button("START",key="api_start",enable_events=True),sg.Button("ダウンロードする",pad=(100,0),key="api_dl_bt",button_color=("white","blue"))],
+    [sg.Button("START",key="api_start",enable_events=True),sg.Button("ダウンロードする",pad=(100,0),key="api_dl_bt",button_color=("white","blue"),visible=False)],
   
 ])
 
@@ -264,41 +264,55 @@ while True:
     #処理実行
     if event == "api_start":
         
-        #(拡張子あり)ファイル名の取得
-        file_name = os.path.split(value["API_in_file"])[1]
-        #(拡張子無し)ファイル名の取得
-        extension_file_name = os.path.splitext(file_name)[0]
+        if value["API_key"] == "":
+            sg.popup("APIキーを入力してください")
+            continue
+        if value["API_in_file"] == "":
+            sg.popup("オーディオファイルを選択して下さい")
+            continue
         
         
-        #ノイズ減少機能の有無を判定
-        if value["toggle_noise_reduction"] == True:
-           noise_value = "true"
-           
-        elif value["toggle_noise_reduction"] == False:
-           noise_value = "false"
-           
-            
-        #話者分離機能OFF　処理実行
-        if value["toggle_diarization_off"] == True:
-            get_api = main_act(API_key=f"{value['API_key']}", audio_file=value["API_in_file"],
-                               noise=noise_value,language=value["target_translation_language"])
-            window["api_out"].update(get_api)
-            
-            #テキスト出力
-            f = open(f"{extension_file_name}.txt","w")
-            f.write(get_api)
-            f.close()
-        #話者分離機能ON　処理実行
-        elif value["toggle_diarization_on"] == True:
-            get_api = diarization_main_act(API_key=f"{value['API_key']}", audio_file=value["API_in_file"], speakers=value["diarization_max_speakers"],
-                                           noise=noise_value,language=value["target_translation_language"])
-            window["api_out"].update(get_api)
-            
-            #テキスト出力
-            f = open(f"{extension_file_name}.txt","w")
-            f.write(get_api)
-            f.close()
-    
-    #処理結果ダウンロード
-    if event == "api_dl_bt":
+        else:
         
+            #(拡張子あり)ファイル名の取得
+            file_name = os.path.split(value["API_in_file"])[1]
+            #(拡張子無し)ファイル名の取得
+            extension_file_name = os.path.splitext(file_name)[0]
+            
+            
+            #ノイズ減少機能の有無を判定
+            if value["toggle_noise_reduction"] == True:
+                noise_value = "true"
+            
+            elif value["toggle_noise_reduction"] == False:
+                noise_value = "false"
+            
+                
+            #話者分離機能OFF　処理実行
+            if value["toggle_diarization_off"] == True:
+                get_api = main_act(API_key=f"{value['API_key']}", audio_file=value["API_in_file"],
+                                noise=noise_value,language=value["target_translation_language"])
+                
+                window["api_out"].update(get_api)
+            
+                #ダウンロードボタンを表示する
+                window["api_dl_bt"].update(visible=True)
+                
+                
+            #話者分離機能ON　処理実行
+            elif value["toggle_diarization_on"] == True:
+                get_api = diarization_main_act(API_key=f"{value['API_key']}", audio_file=value["API_in_file"], speakers=value["diarization_max_speakers"],
+                                            noise=noise_value,language=value["target_translation_language"])
+                
+                window["api_out"].update(get_api)
+                
+                #ダウンロードボタンを表示する
+                window["api_dl_bt"].update(visible=True)
+                
+        
+            #処理結果ダウンロード
+            if event == "api_dl_bt":
+                #テキスト出力
+                f = open(f"{extension_file_name}.txt","w")
+                f.write(get_api)
+                f.close()
