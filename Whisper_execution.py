@@ -193,7 +193,7 @@ lay_2 = sg.Tab("Gladia_API",[
         
     ])],
     
-    [sg.Button("START",key="api_start",enable_events=True)],
+    [sg.Button("START",key="api_start",enable_events=True),sg.Button("ダウンロードする",pad=(100,0),key="api_dl_bt",button_color=("white","blue"))],
   
 ])
 
@@ -299,3 +299,6 @@ while True:
             f.write(get_api)
             f.close()
     
+    #処理結果ダウンロード
+    if event == "api_dl_bt":
+        
