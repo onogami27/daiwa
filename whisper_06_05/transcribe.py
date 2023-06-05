@@ -348,7 +348,8 @@ def transcribe(
                     
                     out_mes = Line.decode(encoding="utf-8",errors="replace")
                     try:
-                        print(out_mes)
+                        print(out_mes,flush=True)
+                        pass
                     except:
                         pass
                     
