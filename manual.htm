@@ -1,0 +1,310 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=Shift_JIS">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>JwwToXlsマニュアル</title>
+<style type="text/css">
+<!--
+body {font-size:11pt; background-color:#ccffcc; }
+table {font-size:11pt; }
+h1 {font-size:16pt; font:bold italic; color:blue; }
+h2 {font-size:12pt; font-weight:bold; color:blue; }
+-->
+</style>
+</head>
+<body>
+<h1>JwwToXls Ver2.0 マニュアル</h1>
+<h2>
+<a name="Index">目次</a>
+<ol>
+<li><a href="#Summary">概要</a>
+<li><a href="#Install">インストール</a>
+<li><a href="#JwOperation">Jw_cad側の操作</a>
+<li><a href="#JxwToXls">JxwToXlsの操作</a>
+<ol type=i>
+<li><a href="#JxwToXls1">起動</a>
+<li><a href="#JxwToXls2">実行</a>
+<li><a href="#JxwToXls3">設定</a>
+</ol>
+<li><a href="#AutoShape">オートシェイプについて</a>
+<li><a href="#Etc">その他</a>
+<li><a href="#DataOut">データ出力について</a>
+<li><a href="#Info">意見・質問等連絡先</a>
+<li><a href="#history">改定履歴</a>
+</ol>
+</h2>
+<hr>
+<h2><a name="Summary">1. 概要</a></h2>
+JwwToXlsは <b>Jiro Shimizu & Yoshifumi Tanaka</b> さんらの <b>Jw_cad for Windows</b> で作成した図形を、外部変形機能もしくは座標ファイル機能を使用して書き出したデータを元にMicrosoft(R) Excelのオートシェイプの図形で描画するものです。<br>
+Microsoft(R) Excelのマクロを使用しています。書名付きのマクロではありませんので、セキュリティレベルが「高」の場合は実行できません。<br>
+Excelのメニュー[ツール]－[マクロ]－[セキュリティ]でセキュリティダイアログを開き｢セキュリティ レベル｣を『中』に設定してください。
+<hr>
+<h2><a name="Install">2. インストール</a></h2>
+JwwToXls.lzhを適当なフォルダに解凍後、外部変形用のファイル<b> JwwToXls.BAT </b>を <b>Jw_cad for Windows</b> がインストールされているフォルダーへ移動してください。<br>
+<span style="color:red;">（注）外部変形全般に言えることですが、Jw_cadがインストールされているフォルダ名にスペースが含まれるていると外部変形は動作しません。（例："C:\Program Files\jww"）</span>
+<hr>
+<h2><a name="JwOperation">Jw_cad側の操作</a></h2>
+<ol>
+<li>メニューの <b>[その他(<u>A</u>)]</b> から <b>外部変形(<u>G</u>)</b> を選択してください。
+<li>外部変形のファイルリストから<b>JwwToXls.BAT</b>を選択してください。
+<li>対象の図形を含む領域の左上で左クリックし、右下でもう一度左クリック（文字を含める場合は右クリック）してください。
+<li><button>選択確定</button>をクリックしてください。Jw_cad側の操作は以上です。<br>
+<b>Jw_cad for Windows</b> がインストールされているフォルダに <b>JwwToXls.txt</b> が作成されます。
+</ol>
+<a href="#Index">目次へ</a>
+
+<hr>
+<h2><a name="JxwToXls">3. JxwToXlsの操作</a></h2>
+
+<a name="JxwToXls1" style="color:blue">i. 起動</a><br>
+<b>JwwToXls.xls</b> を開きます。<br>
+<p align=center><img src="./image/image1.jpg"></p>
+<button>マクロを有効にする(<u>E</u>)</button>をクリックしてください。<br>
+<p align=center><img src="./image/image2.jpg"></p>
+が表示されます。これがメイン画面です。<br>
+<img src="./image/image2_1.jpg" width=34 height=25>をクリックするとバージョンを確認できます。
+<br>
+<p><a href="#Index">目次へ</a></p>
+
+<a name="#JxwToXls2" style="color:blue">ii. 実行</a><br>
+図形を描画するには<button>描画</button>をクリックしてください。<b>拡大縮小率</b>が<b>自動</b>の場合はウィンドウサイズに合わせて適当な倍率で表示し、その時の倍率がテキストボックスに入ります。手入力で設定した時、数値が小さすぎたり、大きすぎる場合はメッセージを表示して修正されます。<br>
+「<a href="#JxwToXls2">iii. 設定</a>」でデータの種類として<b>座標ファイル</b>を指定した場合、<b>座標ファイル</b>を選択するダイアログを表示します。<br>
+<br>
+<p><a href="#Index">目次へ</a></p>
+
+<a name="JxwToXls3" style="color:blue">iii. 設定</a><br>
+線種、線色、線幅の<b>Jw_cad for Windows</b> とExcelとの対応や、描画条件、外部変形で出力した<b>JwwToXls.txt</b>ファイルのパスを指定します。<br>
+メイン画面の<button>設定</button>をクリックしてください。<br>
+設定値変更後<button>実行</button>をクリックすると有効になります。
+次回JwwToXls.xlsを起動するときも有効にする場合は『次回起動時保持』をチェックしてください。
+（単にJwwToXls.xlsを保存するだけですが．．．）
+<br><br>
+《線色、線幅の変更》
+<p align=center><img src="./image/image3_1.jpg"></p>
+「同一色」、「同一幅」のチェックボックスをチェックすると一括して変更することができます。<br>
+ドロップダウンコンボボックスで線幅を選択するか、数値を入力してください。<br>
+「--->」の右側の四角の各色をクリックすると
+<p align=center><img src="./image/image3_1s.jpg"></p>
+が表示されます。RGBの値を変え、<button>実行</button>をクリックすると、色を変更することができます。<br><br>
+《線種の変更》
+<p align=center><img src="./image/image3_2.jpg"></p>
+ドロップダウンリストボックスから線種を選択してください。<br><br>
+《パス名及びデータの種類の変更》<br>
+<p align=center><img src="./image/image3_3.jpg"></p>
+外部変形で出力した<b> JxwToXls.txt </b>が存在するパスを指定してください。<br><br>
+座標ファイルを使用する場合は「座標ファイル」をチェックしてください。メイン画面で<button>描画</button>をクリックすると座標ファイルを選択するダイアログが表示されます。座標ファイルを指定した場合はレイヤーグループの縮尺情報がないため表示される大きさが異なる場合があります。<br>
+「座標ファイル」を選択したときはメイン画面の<button style="color:blue">設定</button>の色が青色で、「外部変形ファイル」を選択したときは<button>設定</button>と黒色で表示されます。<br>
+<br>
+<p><a href="#Index">目次へ</a></p>
+
+《オプション》
+<p align=center><img src="./image/image3_4.jpg"></p>
+<ul type=circle>
+<li><b>出力先</b><br>
+描画先のアプリケーションとしてExcel以外にWord、PowerPointを選択できます。Word、PowerPointがインストールされていない場合は、起動できない旨のメッセージが表示されます。<br>
+Wordが選択された場合はメイン画面の<button>描画</button>の文字が青色の<button style="color:blue;">描画</button>に、PowerPointが選択された場合は緑色の<button style="color:green;">描画</button>に変わります。<br>
+また、Word、PowerPointを選択した場合は「図形要素データの出力」は無効になります。
+
+<li><b>図形要素のつながりチェックの省略</b><br>
+複数の図形要素で１つの図形を構成する四角形や、連続直線など、図形要素同士のつながりや関連のチェックを行わず、単に直線、円、楕円、円弧、楕円弧で描画します。
+
+<li><b>矢印図形要素のチェックの省略</b><br>
+直線や円弧の端点に片側15°、長さ3mmの直線の組を矢印の図形要素として判断していますが、このチェックを行わず、通常の直線として描画します。
+
+<li><b>図形要素データの出力</b><br>
+図形要素の種類や関連性などを記述しています。詳細は後述します。『Jww_cad座標系』、『ワークシート座標系』のチェックボックスでデータの座標系を選択します。両方チェックするとワークシート座標系のデータは新しいワークシートに記述されます。Jww_cad座標の原点はJw_cadで指定した基準点になります。
+</ul>
+<p><a href="#Index">目次へ</a></p>
+
+<hr>
+<h2><a name="Summary">5. オートシェイプについて</a></h2>
+オートシェイプで描画されるのは下記の通りです。
+<table border=1>
+<colgroup>
+<col width=120>
+<col width=300>
+</colgroup>
+<thead>
+<tr><th>オートシェイプ名</th><th>備考</th></tr>
+</thead>
+<tr><td>楕円</td><td>円、楕円。円柱、ドーナツ、アーチを構成する円や楕円は除きます。</td></tr>
+<tr><td>円弧</td><td>単独の円弧・楕円弧のみ。端点に他の円弧や直線がつながっている場合は、フリーフォームで描画されます。また、単独の円弧・楕円弧であっても極端に大きな半径の場合など中心座標が描画領域外に位置する場合はフリーフォームで描画されます。</td></tr>
+<tr><td>四角形</td><td>長方形、正方形は四角形で描画されます。</td></tr>
+<tr><td>ひし形</td><td>正方形の場合四角形で描画されます。</td></tr>
+<tr><td>平行四辺形</td><td>ひし形の場合ひし形で、長方形・正方形の場合四角形で描画されます。</td></tr>
+<tr><td>台形</td><td>非対称の台形はフリーフォームで描画されます。</td></tr>
+<tr><td>角丸四角形</td><td>４角を同一半径で丸面取りされた四角形</td></tr>
+<tr><td>円柱</td><td>楕円の高さが円柱の高さの２分の１以上の場合は描画できません。</td></tr>
+<tr><td>ドーナツ</td><td>２つの同心円の場合のみです。３つ以上の同心円の場合はあえて円・楕円で描画しています。</td></tr>
+<tr><td>アーチ</td><td>２つの円弧もしくは２つの楕円弧の回転角同じである必要があります。</td></tr>
+<tr><td>直線</td><td>単独の直線</td></tr>
+<tr><td>フリーフォーム</td><td>連続する直線、円弧、楕円、Jw_cadでの曲線の組み合わせの場合はフリーフォームとなります。１点から３方向以上に分岐している図形の場合、どの図形が連続しているとみなされるかはデータの読込み順に依ります。</td></tr>
+<tr><td>テキストボックス</td><td>文字列を描画します。</td></tr>
+</table>
+<p><a href="#Index">目次へ</a></p>
+
+<hr>
+<h2><a name="Etc">6. その他</a></h2>
+
+<ul type=circle>
+<li><span style="color:red">ブロック化された図形は描画できません。</span>
+<li>点は半径1.5ptの円で描画されます。
+<li>レイヤー、レイヤーグループ、線種、線色が異なる図形要素で構成されている場合、「5. オートシェイプ」に該当する図形であっても、別々に描画されます。
+<li>座標ファイルを使用し、異なる縮尺のレイヤーグループの場合、縮尺の比に反比例した図形で描画されます。
+<li>Jw_cadの「寸法設定」で矢印の長さ、角度を3mm、15°以外に設定している場合は、正しく矢印として認識できません。<br>また、矢印はオートシェイプの矢印のサイズで設定しているため、Jw_cadの矢印のサイズとは異なります。
+<li>文字列は全て"ＭＳ ゴシック"で描画しています。Jw_cadでの文字列の縦、横のサイズは再現できていません。文字列の方向ベクトルの大きさと文字数からフォントサイズを決定し、テキストボックスの幅をできるだけJw_cad上での位置関係に一致させるようにしています。また、文字列の方向もExcel、Wordの機能上、４方向のいずれか近い方向になります。
+<li>Windows XP の場合、JwwToXlsを終了する際、下記メッセージを表示することがあります。<button>いいえ</button>を選択してください。<br><img src="./image/image6.jpg">
+</ul>
+<p><a href="#Index">目次へ</a></p>
+
+<hr>
+<h2><a name="DataOut">7. データ出力について</a></h2>
+<p>サンプル図形<br><img src="./image/image5.jpg"></p>
+<table border=1 style="table-layout:fixed;">
+<colgroup>
+<col width=30 span=2 align=right>
+<col width=60 span=2>
+<col width=30 span=2>
+<col width=60 span=7 align=right>
+<col width=60 span=4 align=right>
+<col width=50 span=6 align=right>
+</colgroup>
+<caption align=left>出力例</caption>
+<thead>
+<tr>
+<td align=left>No</td><td align=left>Grp</td><td align=left>GrpTp</td><td align=left>Shp</td>
+<td align=left>Tp</td><td align=left>Rot</td><td align=left>Xs</td><td align=left>Ys</td>
+<td align=left>Xe</td><td align=left>Ye</td><td align=left>Xc</td><td align=left>Yc</td>
+<td align=left>r</td><td align=left>θs</td><td align=left>θe</td><td align=left>ε</td><td align=left>φ</td>
+<td align=left>LyGgp</td><td align=left>Layer</td><td align=left>Color</td>
+<td align=left>Type</td><td align=left>Scale</td><td align=left>Chr/Ri</td></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>0</td><td>ALONE</td><td>CAN</td><td>O</td><td>L</td><td>2.000</td><td>8.000</td><td>2.000</td><td>8.000</td><td>0.000</td><td>8.000</td><td>2.000</td><td>0.000</td><td>360.000</td><td>0.300</td><td>0.000</td><td>0</td><td>1</td><td>2</td><td>1</td><td>1</td><td>&nbsp;</td></tr>
+<tr><td>1</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>OA</td><td>L</td><td>-2.000</td><td>6.500</td><td>2.000</td><td>6.500</td><td>0.000</td><td>6.500</td><td>2.000</td><td>180.000</td><td>0.000</td><td>0.300</td><td>0.000</td><td>0</td><td>1</td><td>2</td><td>1</td><td>1</td><td>&nbsp;</td></tr>
+<tr><td>2</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>L</td><td>S</td><td>-2.000</td><td>8.000</td><td>-2.000</td><td>6.500</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>0</td><td>1</td><td>2</td><td>1</td><td>1</td><td>&nbsp;</td></tr>
+<tr><td>3</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>L</td><td>S</td><td>2.000</td><td>6.500</td><td>2.000</td><td>8.000</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>0</td><td>1</td><td>2</td><td>1</td><td>1</td><td>&nbsp;</td></tr>
+<tr><td>4</td><td>1</td><td>ALONE</td><td>LINE</td><td>L</td><td>S</td><td>0.000</td><td>-1.000</td><td>0.000</td><td>10.000</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>0</td><td>0</td><td>1</td><td>5</td><td>1</td><td>&nbsp;</td></tr>
+<tr><td>5</td><td>2</td><td>OPEN</td><td>FREE</td><td>L</td><td>S</td><td>-2.000</td><td>2.000</td><td>-2.000</td><td>0.500</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>0</td><td>1</td><td>2</td><td>1</td><td>1</td><td>&nbsp;</td></tr>
+<tr><td>6</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>OA</td><td>L</td><td>-2.000</td><td>0.500</td><td>2.000</td><td>0.500</td><td>0.000</td><td>0.500</td><td>2.000</td><td>180.000</td><td>0.000</td><td>0.300</td><td>0.000</td><td>0</td><td>1</td><td>2</td><td>1</td><td>1</td><td>&nbsp;</td></tr>
+<tr><td>7</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>L</td><td>S</td><td>2.000</td><td>0.500</td><td>2.000</td><td>2.000</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>0</td><td>1</td><td>2</td><td>1</td><td>1</td><td>&nbsp;</td></tr>
+<tr><td>8</td><td>3</td><td>OPEN</td><td>FREE</td><td>L</td><td>S</td><td>1.000</td><td>5.980</td><td>1.000</td><td>2.000</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>0</td><td>1</td><td>2</td><td>1</td><td>1</td><td>&nbsp;</td></tr>
+<tr><td>9</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>OA</td><td>R</td><td>1.000</td><td>2.000</td><td>-1.000</td><td>2.000</td><td>0.000</td><td>2.000</td><td>1.000</td><td>0.000</td><td>180.000</td><td>0.300</td><td>0.000</td><td>0</td><td>1</td><td>2</td><td>1</td><td>1</td><td>&nbsp;</td></tr>
+<tr><td>10</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>L</td><td>S</td><td>-1.000</td><td>2.000</td><td>-1.000</td><td>5.980</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>0</td><td>1</td><td>2</td><td>1</td><td>1</td><td>&nbsp;</td></tr>
+<tr><td>11</td><td>4</td><td>ALONE</td><td>ARC</td><td>OA</td><td>L</td><td>-1.000</td><td>2.520</td><td>1.000</td><td>2.520</td><td>0.000</td><td>2.000</td><td>2.000</td><td>120.000</td><td>60.000</td><td>0.300</td><td>0.000</td><td>0</td><td>1</td><td>2</td><td>1</td><td>1</td><td>&nbsp;</td></tr>
+</tbody>
+</table>
+<br>
+<table border=1>
+<caption align=left>各項目の説明</caption>
+<colgroup>
+<col valign=top>
+<col>
+</colgroup>
+<tr><td>No</td><td>図形要素番号</td></tr>
+<tr><td>Grp</td><td>図形番号</td></tr>
+<tr><td>GrpTp</td>
+<td>分類<br>
+　OPEN：開いた連続図形（直線、円弧、楕円弧がつながった図形）<br>
+　CLS_L：閉じた連続図形（左回り）<br>
+　CLS_R：閉じた連続図形（右回り）<br>
+　ALONE：単独図形（フリーフォーム以外のオートシェイプ）<br>
+　NOP：描画しない図形（矢印の矢の部分の直線）
+</td></tr>
+<tr><td>Shp</td>
+<td>オートシェイプの種類<br>
+　FREE：フリーフォーム<br>
+　STR：文字列<br>
+　DOT：点<br>
+　LINE：直線<br>
+　OVAL：楕円<br>
+　ARC：円弧<br>
+　rRECT：角丸四角形<br>
+　RECT：四角形<br>
+　DIA：ひし形<br>
+　PARL：平行四辺形<br>
+　TRPZ：台形<br>
+　BARC：アーチ<br>
+　DONUT：ドーナツ<br>
+　CAN：円柱<br>
+　ARROW：矢印（オートシェイプではありません）
+</td></tr>
+<tr><td>Tp</td>
+<td>図形要素の種類<br>
+　P：点<br>
+　L：直線<br>
+　A：円弧<br>
+　OA：楕円弧<br>
+　C：円<br>
+　O：楕円<br>
+　S：文字列
+</td></tr>
+<tr><td>Rot</td>
+<td>図形要素の周回方向<br>
+　P：なし（点）<br>
+　S：なし（直線、文字列）<br>
+　R：右回転<br>
+　L：左回転<br>
+※単独の円、楕円、円弧、楕円弧は全て左回転です。<br>
+　連続図形の一部の場合、つながり方によって右回転になります。
+</td></tr>
+<tr><td>Xs</td>
+<td rowspan=2>開始点座標<br>
+<span style="font-size:9pt">※円、楕円、円弧、楕円弧の場合は開始角度から計算した値です。</span></td></tr>
+<tr><td>Ys</td></tr>
+<tr><td>Xe</td>
+<td rowspan=2>終了点座標<br>
+<span style="font-size:9pt">※円、楕円、円弧、楕円弧の場合は終了角度から計算した値です。<br>
+　文字列の場合方向ベクトルになります。点の場合は空白です。</span></td></tr>
+<tr><td>Ye</td></tr>
+<tr><td>Xc</td>
+<td rowspan=2>
+中心座標<br>
+三角形ソリッド、四角形ソリッドの場合、３番目の点の座標となります。
+</td></tr>
+<tr><td>Yc</td></tr>
+<tr><td>r</td><td>半径</td></tr>
+<tr><td>θs</td>
+<td rowspan=2>
+開始角度　<span style="font-size:9pt">※円、楕円の場合は0としています。</span><br>
+終了角度　<span style="font-size:9pt">※円、楕円の場合は360としています。</span><br>
+四角形ソリッドの場合、４番目の点の座標となります。
+</td></tr>
+<tr><td>θe</td></tr>
+<tr><td>ε</td><td>扁平率。円、円弧は1です。</td></tr>
+<tr><td>φ</td>
+<td>回転角<br>
+<span style="font-size:9pt">※文字列の場合は、方向ベクトルの角度を計算した値です。</span></td></tr>
+<tr><td>LyGgp</td><td>Jw_cadのレイヤーグループです。</td></tr>
+<tr><td>Layer</td><td>Jw_cadのレイヤーです。</td></tr>
+<tr><td>Color</td><td>線色です。ソリッドデータの場合はRGB値の16進数表記です。</td></tr>
+<tr><td>Type</td><td>線種です。</td></tr>
+<tr><td>Scale</td><td>拡大縮小率です。レイヤーグループの縮尺が5/1の場合0.2となります。</td></tr>
+<tr><td>Chr/Ri</td><td>文字列の場合の文字です。<br>円環ソリッドの場合内円半径となります</td></tr>
+</table>
+<p><a href="#Index">目次へ</a></p>
+
+<hr>
+<h2><a name="Info">8. 意見・質問等の連絡先</a></h2>
+<b>JwwToXls</b>に関する意見・質問等は A. Hatakeyama ( E-mail : <a href="mailto:akishan@pat.hi-ho.ne.jp">akishan@pat.hi-ho.ne.jp</a> ) まで。
+<p><a href="#Index">目次へ</a></p>
+
+<hr>
+<h2><a name="History">9. 改定履歴</a></h2>
+Ver1.8からVer2.0へ
+<ul>
+<li>レイヤーグループがA～F及びレイヤーがA～Fの場合、レイヤーグループ0及びレイヤー0と判断されてしまっているのを修正
+<li>円筒図形の円の短径が正しく描画されないのを修正
+<li>アーチ図形の開始角・終了角が90°、270°に対して対称の場合、正しく描画されないのを修正
+<li>連続図形の１頂点から分岐した図形の場合、条件によってマクロエラーとなるのを修正
+<li>開始角、終了角の差が1°以下の円弧をフリーフォームで描画する際、マクロエラーとなるのを修正
+<li>円弧を含む連続図形で円弧の中心角が270°以上の時マクロエラーとなるのを修正
+<li>補助線色、補助線種の色、線幅、線種も指定できるように変更
+<li>曲線データを１塊の集合体として取り扱うように変更。（旧バージョンでは個々の直線として扱っていた）
+<li>ソリッドデータを描画できるようにした
+<li>Microsoft(R) Wrod、PowerPointへの直接描画をできるようにした
+</ul>
+<p><a href="#Index">目次へ</a></p>
+
+</body>
+</html>
